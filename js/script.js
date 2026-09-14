@@ -15,6 +15,15 @@
     return div.innerHTML;
   }
 
+  function photoIconSvg() {
+    return `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2.5" y="5.5" width="19" height="14" rx="2" stroke="currentColor" stroke-width="1.4"/>
+      <circle cx="8.2" cy="10.2" r="1.6" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M3 16.5L8 12.3C8.6 11.8 9.5 11.8 10.1 12.3L13 14.7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 16.5L15.6 13.5C16.2 13 17.1 13 17.7 13.5L21 16.3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  }
+
   /* ---------------- Hero & Profile ---------------- */
 
   function renderHero(profile) {
@@ -33,7 +42,10 @@
   }
 
   function renderProfile(profile) {
-    $("#profile-avatar").textContent = profile.initials || "?";
+    $("#profile-avatar").innerHTML = profile.fotoProfil
+      ? `<img src="${escapeHtml(profile.fotoProfil)}" alt="Foto profil ${escapeHtml(profile.name)}">`
+      : `<span class="avatar__placeholder-icon">${photoIconSvg()}</span><span class="avatar__placeholder-label">Foto profil</span>`;
+    $("#profile-avatar").classList.toggle("avatar--has-photo", Boolean(profile.fotoProfil));
     $("#profile-name").textContent = profile.name;
     $("#profile-role").textContent = profile.prodi;
     $("#profile-bio").textContent = profile.bio;
@@ -47,13 +59,100 @@
   function artefactCardHtml(item) {
     const empty = !item.href;
     const tag = empty ? "div" : "a";
-    const hrefAttr = empty ? "" : ` href="${escapeHtml(item.href)}" target="_blank" rel="noopener"`;
+    const hrefAttr = empty ? "" : ` href="${escapeHtml(item.href)}" target="_blank" rel="noopener" data-preview-label="${escapeHtml(item.label)}"`;
     return `
       <${tag} class="artefact-card${empty ? " is-empty" : ""}"${hrefAttr}>
         <span class="artefact-card__icon">${empty ? "–" : "↗"}</span>
         <span class="artefact-card__label">${escapeHtml(item.label)}</span>
         ${empty ? '<span class="artefact-card__note">Tautan belum tersedia</span>' : ""}
       </${tag}>
+    `;
+  }
+
+  /* ---------------- Google Drive preview modal ----------------
+     Tempel link "Share" apa adanya dari Drive (format /file/d/ID/view
+     atau ...?id=ID) di data.js — fungsi di bawah ini yang mengubahnya
+     jadi link pratinjau yang bisa dibuka di dalam popup. */
+
+  function extractDriveFileId(url) {
+    const patterns = [/\/file\/d\/([\w-]{10,})/, /[?&]id=([\w-]{10,})/];
+    for (const re of patterns) {
+      const m = url.match(re);
+      if (m) return m[1];
+    }
+    return null;
+  }
+
+  function toDrivePreviewUrl(url) {
+    const id = extractDriveFileId(url);
+    return id ? `https://drive.google.com/file/d/${id}/preview` : null;
+  }
+
+  function openDocPreview(url, label) {
+    const previewUrl = toDrivePreviewUrl(url);
+    const modal = $("#drive-modal");
+    $("#modal-title").textContent = label || "Pratinjau dokumen";
+    $("#modal-open-new").href = url;
+
+    if (previewUrl) {
+      $("#modal-iframe").src = previewUrl;
+      modal.hidden = false;
+      document.body.style.overflow = "hidden";
+    } else {
+      // bukan link Drive yang dikenali — buka langsung di tab baru
+      window.open(url, "_blank", "noopener");
+    }
+  }
+
+  function closeDocPreview() {
+    const modal = $("#drive-modal");
+    modal.hidden = true;
+    $("#modal-iframe").src = "";
+    document.body.style.overflow = "";
+  }
+
+  function initDocPreview() {
+    // event delegation: satu listener untuk semua kartu artefak, termasu yang dirender ulang nanti
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest(".artefact-card[data-preview-label]");
+      if (!link) return;
+      // biarkan browser menangani sendiri kalau user memang mau buka tab baru manual
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
+      e.preventDefault();
+      openDocPreview(link.getAttribute("href"), link.dataset.previewLabel);
+    });
+
+    $all("[data-close]").forEach((el) => el.addEventListener("click", closeDocPreview));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !$("#drive-modal").hidden) closeDocPreview();
+    });
+  }
+
+  /* ---------------- Photo documentation grid ---------------- */
+
+  function photoGridHtml(fotoList) {
+    if (!fotoList || fotoList.length === 0) return "";
+    const slots = fotoList.map((f) => {
+      if (f.src) {
+        return `
+          <figure class="photo-slot">
+            <img src="${escapeHtml(f.src)}" alt="${escapeHtml(f.caption || "Dokumentasi kegiatan")}">
+            <figcaption>${escapeHtml(f.caption || "")}</figcaption>
+          </figure>
+        `;
+      }
+      return `
+        <figure class="photo-slot photo-slot--empty">
+          ${photoIconSvg()}
+          <figcaption>${escapeHtml(f.caption || "Foto belum diunggah")}</figcaption>
+        </figure>
+      `;
+    }).join("");
+    return `
+      <div class="photo-section">
+        <h4 class="photo-section__title">Dokumentasi foto kegiatan</h4>
+        <div class="photo-grid">${slots}</div>
+      </div>
     `;
   }
 
@@ -138,6 +237,7 @@
         <div class="artefact-row">
           ${siklus.artefak.map(artefactCardHtml).join("")}
         </div>
+        ${photoGridHtml(siklus.foto)}
         ${analysisHtml(siklus.analisis, siklus.konteks)}
       </div>
     `;
@@ -270,6 +370,7 @@
     buildSidebarSub("mandiri", PORTFOLIO.mandiri);
     initNav();
     initMobileToggle();
+    initDocPreview();
     applyHash();
   });
 })();

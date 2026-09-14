@@ -19,6 +19,9 @@ const PORTFOLIO = {
     sekolah: "SMK Negeri 13 Bandung",
     semesterBerjalan: "Semester 2 — PPL Mandiri",
     initials: "AS",
+    // Isi dengan link foto profil kalau sudah ada (boleh link Drive atau file lokal, mis. "img/profil.jpg").
+    // Selama masih "", yang tampil adalah kotak placeholder foto.
+    fotoProfil: "",
     bio: "Calon guru Informatika dengan latar belakang sebagai pengembang perangkat lunak lepas (Flutter, Laravel, Swift, Firebase). Pengalaman itu banyak mewarnai cara saya merancang pembelajaran pemrograman: dimulai dari masalah nyata dan studi kasus konkret, bukan sekadar teori di papan tulis.",
     fokus: "Selama PPG Prajabatan, saya berfokus mengajar mata pelajaran Informatika dan Pemrograman Aplikasi Mobile, dengan minat khusus pada bagaimana pendekatan Discovery Learning dapat mendorong kemandirian belajar peserta didik saat menghadapi materi pemrograman yang baru bagi mereka."
   },
@@ -58,6 +61,11 @@ const PORTFOLIO = {
             judul: "Rencana Perbaikan",
             isi: "Untuk situasi kelas di masa depan, lembar panduan diskusi (LKPD) akan dibuat lebih terstruktur (scaffolding) guna memandu fokus siswa. Selain itu, alokasi waktu khusus untuk sesi refleksi kelompok akan ditambahkan agar siswa tidak hanya mengejar hasil akhir (kode yang jalan), tetapi benar-benar menyadari proses berpikir algoritmik yang mereka gunakan."
           }
+        ],
+        foto: [
+          { src: "", caption: "Dokumentasi kegiatan 1" },
+          { src: "", caption: "Dokumentasi kegiatan 2" },
+          { src: "", caption: "Dokumentasi kegiatan 3" }
         ]
       }
     ]
@@ -71,7 +79,7 @@ const PORTFOLIO = {
         id: "m1",
         judul: "Siklus 1",
         topik: "Sistem Bilangan & Gerbang Logika",
-        kelas: "DPK",
+        kelas: "X RPL 2 — DPK",
         guruPamong: "Pak Jaya",
         status: "done",
         statusLabel: "3 pertemuan selesai",
@@ -83,7 +91,12 @@ const PORTFOLIO = {
           { label: "Instrumen Penilaian", href: "" }
         ],
         konteks: "",
-        analisis: []
+        analisis: [],
+        foto: [
+          { src: "", caption: "Dokumentasi pertemuan 1" },
+          { src: "", caption: "Dokumentasi pertemuan 2" },
+          { src: "", caption: "Dokumentasi pertemuan 3" }
+        ]
       },
       {
         id: "m2",
@@ -118,6 +131,11 @@ const PORTFOLIO = {
             judul: "Rencana Perbaikan",
             isi: "Berdasarkan umpan balik Guru Pamong, LKPD akan disusun lebih bertahap (scaffolded) dan dilengkapi unsur gamifikasi agar peserta didik yang pasif memiliki titik masuk yang lebih ringan untuk mencoba secara mandiri, dengan target terukur minimal 70% peserta didik mampu menyelesaikan latihan secara mandiri. Temuan ini menjadi dasar pengembangan intervensi PTK berikutnya."
           }
+        ],
+        foto: [
+          { src: "", caption: "Dokumentasi pertemuan 1" },
+          { src: "", caption: "Dokumentasi pertemuan 2" },
+          { src: "", caption: "Dokumentasi pertemuan 3" }
         ]
       },
       {
@@ -153,6 +171,11 @@ const PORTFOLIO = {
             judul: "Rencana Perbaikan",
             isi: "Pertemuan berikutnya direncanakan untuk memperdalam praktik langsung menggunakan spreadsheet (Google Sheets/Excel) guna mendeteksi outlier secara kuantitatif (misalnya metode Z-score atau IQR sederhana), serta menyiapkan instrumen penilaian berupa studi kasus data eksperimen yang lebih bervariasi."
           }
+        ],
+        foto: [
+          { src: "", caption: "Dokumentasi pertemuan 1" },
+          { src: "", caption: "Dokumentasi pertemuan 2" },
+          { src: "", caption: "Dokumentasi pertemuan 3" }
         ]
       }
     ]

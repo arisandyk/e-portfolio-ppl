@@ -111,6 +111,22 @@
     </main>
   </div>
 
+  <div class="modal" id="drive-modal" hidden>
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal__header">
+        <span class="modal__title" id="modal-title">Pratinjau dokumen</span>
+        <div class="modal__actions">
+          <a id="modal-open-new" class="modal__link" href="#" target="_blank" rel="noopener">Buka di tab baru</a>
+          <button class="modal__close" data-close type="button" aria-label="Tutup pratinjau">&times;</button>
+        </div>
+      </div>
+      <div class="modal__body">
+        <iframe id="modal-iframe" src="" title="Pratinjau dokumen" allow="autoplay"></iframe>
+      </div>
+    </div>
+  </div>
+
   <script src="js/data.js"></script>
   <script src="js/script.js"></script>
 </body>
