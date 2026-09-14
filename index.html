@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jurnal Praktik Mengajar — Ari Sandy Kurniawan</title>
+<meta name="description" content="E-Portfolio praktik mengajar PPG Prajabatan — Ari Sandy Kurniawan">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div class="mobile-topbar">
+    <span class="mobile-topbar__brand">Jurnal Mengajar</span>
+    <button id="mobile-toggle" class="mobile-topbar__toggle" type="button">Menu</button>
+  </div>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__brand">
+        <span class="sidebar__brand-mark">Jurnal Mengajar</span>
+        <span class="sidebar__brand-sub">E-Portfolio PPG Prajabatan</span>
+      </div>
+      <nav>
+        <div class="nav-group">
+          <button class="nav-link" data-panel="beranda" type="button">Beranda</button>
+        </div>
+        <div class="nav-group">
+          <button class="nav-link" data-panel="profil" type="button">Profil</button>
+        </div>
+        <div class="nav-group">
+          <button class="nav-link" data-panel="terbimbing" type="button">PPL Terbimbing</button>
+          <div class="nav-sub" id="nav-terbimbing-sub"></div>
+        </div>
+        <div class="nav-group">
+          <button class="nav-link" data-panel="mandiri" type="button">PPL Mandiri</button>
+          <div class="nav-sub" id="nav-mandiri-sub"></div>
+        </div>
+        <div class="nav-group">
+          <button class="nav-link" data-panel="nonmengajar" type="button">Kegiatan Nonmengajar</button>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main">
+
+      <section class="panel" id="panel-beranda">
+        <div class="hero">
+          <div>
+            <h1 class="hero__title">Jurnal Praktik Mengajar</h1>
+            <p class="hero__lede">Dokumentasi rancangan, pelaksanaan, dan refleksi praktik mengajar selama Pendidikan Profesi Guru Prajabatan — dari siklus terbimbing di semester pertama, sampai praktik mandiri yang sedang berjalan sekarang.</p>
+            <div class="hero__cta">
+              <a href="#mandiri" class="btn btn--primary">Lihat PPL Mandiri</a>
+              <a href="#profil" class="btn btn--ghost">Lihat profil</a>
+            </div>
+          </div>
+          <div class="id-card">
+            <div id="idcard-rows"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-profil">
+        <div class="section-head">
+          <h2>Tentang saya</h2>
+        </div>
+        <div class="profile-grid">
+          <div class="avatar" id="profile-avatar"></div>
+          <div>
+            <h3 id="profile-name"></h3>
+            <p id="profile-role" style="color:var(--sky-deep); font-weight:600; margin-bottom:16px;"></p>
+            <p id="profile-bio"></p>
+            <p id="profile-fokus"></p>
+            <p style="color:var(--text-soft); font-size:0.9rem;">Kampus: <span id="profile-kampus"></span> &middot; Sekolah PPL: <span id="profile-sekolah"></span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-terbimbing">
+        <div class="section-head">
+          <h2>PPL Terbimbing — Semester 1</h2>
+          <p>Siklus pembelajaran yang dirancang, dipraktikkan, dan direfleksikan bersama Guru Pamong sebagai dasar sebelum memasuki praktik mandiri.</p>
+        </div>
+        <div class="stage-tabs" id="terbimbing-tabs"></div>
+        <div id="terbimbing-panels"></div>
+      </section>
+
+      <section class="panel" id="panel-mandiri">
+        <div class="section-head">
+          <h2>PPL Mandiri — Semester 2</h2>
+          <p>Siklus praktik mengajar mandiri di tiga mata pelajaran berbeda, masing-masing dengan Guru Pamong dan konteks kelasnya sendiri.</p>
+        </div>
+        <div class="stage-tabs" id="mandiri-tabs"></div>
+        <div id="mandiri-panels"></div>
+      </section>
+
+      <section class="panel" id="panel-nonmengajar">
+        <div class="section-head">
+          <h2>Kegiatan Nonmengajar</h2>
+          <p>Kegiatan pendukung di luar praktik mengajar langsung selama PPL Mandiri.</p>
+        </div>
+        <div id="nonmengajar-content"></div>
+      </section>
+
+      <footer class="footer-note">
+        Jurnal Praktik Mengajar &middot; Ari Sandy Kurniawan &middot; PPG Prajabatan Informatika, Universitas Pendidikan Indonesia
+      </footer>
+
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
